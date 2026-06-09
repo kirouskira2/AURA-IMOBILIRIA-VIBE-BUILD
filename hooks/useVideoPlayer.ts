@@ -3,7 +3,19 @@ import { useState, useEffect, useRef } from "react";
 export function useVideoPlayer(scrolled: boolean) {
   const [isVideoIntersecting, setIsVideoIntersecting] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const toggleMute = () => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      const command = isMuted ? 'unMute' : 'mute';
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func: command, args: [] }),
+        '*'
+      );
+      setIsMuted(!isMuted);
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -38,5 +50,5 @@ export function useVideoPlayer(scrolled: boolean) {
     }
   }, [isVideoIntersecting, scrolled, iframeLoaded]);
 
-  return { iframeRef, iframeLoaded, setIframeLoaded };
+  return { iframeRef, iframeLoaded, setIframeLoaded, isMuted, toggleMute };
 }

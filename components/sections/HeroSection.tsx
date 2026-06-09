@@ -3,13 +3,13 @@
 import React from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "motion/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Volume2, VolumeX } from "lucide-react";
 import { useScrollNav } from "@/hooks/useScrollNav";
 import { useVideoPlayer } from "@/hooks/useVideoPlayer";
 
 export function HeroSection() {
   const { scrolled } = useScrollNav();
-  const { iframeRef, setIframeLoaded } = useVideoPlayer(scrolled);
+  const { iframeRef, setIframeLoaded, isMuted, toggleMute } = useVideoPlayer(scrolled);
   
   const { scrollY } = useScroll();
   const rotateX = useTransform(scrollY, [0, 400], [45, 0]);
@@ -64,6 +64,15 @@ export function HeroSection() {
                 <p className="text-zinc-700 text-xs text-balance mt-0.5">Casa Modernista, SP</p>
               </div>
             </div>
+
+            {/* Sound Control */}
+            <button 
+              onClick={toggleMute}
+              className="absolute bottom-6 md:bottom-10 right-6 md:right-10 z-30 w-12 h-12 rounded-full bg-black/50 hover:bg-black/80 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-2xl transition-all hover:scale-105 group/btn"
+              aria-label={isMuted ? "Ativar som" : "Desativar som"}
+            >
+              {isMuted ? <VolumeX className="w-5 h-5 text-white" /> : <Volume2 className="w-5 h-5 text-white" />}
+            </button>
           </motion.div>
         </div>
       </section>
