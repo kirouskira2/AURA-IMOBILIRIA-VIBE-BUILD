@@ -5,6 +5,7 @@ import Link from "next/link";
 import { login } from "@/app/actions/auth";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { Particles } from "@/components/ui/particles";
 
 export default function LoginPage() {
   const [error, setError] = useState("");
@@ -23,6 +24,13 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white flex flex-col justify-center items-center px-4 relative overflow-hidden">
       <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black"></div>
+      <Particles 
+        className="absolute inset-0 z-0" 
+        quantity={150} 
+        ease={80} 
+        color="#ffffff" 
+        refresh 
+      />
       
       <div className="relative z-10 w-full max-w-md">
         <div className="text-center mb-10">

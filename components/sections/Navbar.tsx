@@ -15,8 +15,9 @@ export function Navbar() {
 
   return (
     <>
-      <header className="fixed left-0 right-0 mx-auto z-50 w-full px-4 md:px-0 top-0 md:top-4 animate-fade-in [--animation-delay:600ms] pointer-events-none flex flex-col items-center">
+      <header className="fixed left-0 right-0 mx-auto z-50 w-full px-4 md:px-0 top-0 md:top-4 pointer-events-none flex flex-col items-center">
         <motion.div 
+          initial={false}
           animate={{
             width: scrolled ? "85%" : "100%",
             maxWidth: scrolled ? "850px" : "1000px",
