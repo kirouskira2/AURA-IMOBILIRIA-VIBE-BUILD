@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Volume2, VolumeX } from "lucide-react";
 import { useScrollNav } from "@/hooks/useScrollNav";
 import { useVideoPlayer } from "@/hooks/useVideoPlayer";
+import { Backlight } from "@/components/ui/backlight";
 
 export function HeroSection() {
   const { scrolled } = useScrollNav();
@@ -20,7 +21,7 @@ export function HeroSection() {
     <div className="relative min-h-[95vh] flex flex-col justify-center w-full pb-16">
       <section id="hero" className="relative mx-auto max-w-[90rem] px-6 text-center md:px-8 pb-12 pt-28 md:pt-36 z-10 w-full overflow-visible">
         <h1 className="font-light text-4xl sm:text-7xl text-center max-w-5xl mx-auto text-black leading-tight tracking-tight translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
-          A verdadeira essência do <span className="text-indigo-600">morar bem.</span>
+          A verdadeira essência do <span className="text-indigo-600">morar <br className="hidden md:block" /> bem.</span>
         </h1>
         <p className="mb-10 text-lg md:text-xl tracking-tight text-zinc-600 text-balance translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms] max-w-2xl mx-auto">
           Curadoria especializada de imóveis de alto padrão nas melhores localizações. Experiência exclusiva, discrição e resultados em cada negócio.
@@ -34,7 +35,7 @@ export function HeroSection() {
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-        <div style={{ perspective: '1000px' }} className="mt-16 sm:mt-24 w-full max-w-6xl mx-auto aspect-[16/9] animate-fade-in opacity-0 translate-y-[-1rem] [--animation-delay:800ms]">
+        <div style={{ perspective: '1000px' }} className="relative mt-16 sm:mt-24 w-full max-w-6xl mx-auto aspect-[16/9] animate-fade-in opacity-0 translate-y-[-1rem] [--animation-delay:800ms]">
           <motion.div 
             style={{
               rotateX: rotateX,
@@ -42,8 +43,10 @@ export function HeroSection() {
               opacity: opacity,
               transformOrigin: "top center"
             }}
-            className="relative w-full h-full overflow-hidden bg-zinc-900 group rounded-[32px] border border-white/10 shadow-2xl"
+            className="absolute inset-0 w-full h-full"
           >
+            <Backlight blur={40} className="w-full h-full">
+              <div className="relative w-full h-full overflow-hidden bg-zinc-900 group rounded-[32px] shadow-2xl">
             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-1000 z-10 pointer-events-none"></div>
             <iframe 
               ref={iframeRef}
@@ -73,7 +76,11 @@ export function HeroSection() {
             >
               {isMuted ? <VolumeX className="w-5 h-5 text-white" /> : <Volume2 className="w-5 h-5 text-white" />}
             </button>
+              </div>
+            </Backlight>
           </motion.div>
+          
+
         </div>
       </section>
     </div>

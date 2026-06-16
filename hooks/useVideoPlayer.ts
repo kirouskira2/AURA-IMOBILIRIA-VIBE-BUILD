@@ -34,6 +34,8 @@ export function useVideoPlayer(scrolled: boolean) {
     };
   }, []);
 
+  const [hasAutoUnmuted, setHasAutoUnmuted] = useState(false);
+
   useEffect(() => {
     if (iframeRef.current && iframeRef.current.contentWindow) {
       if (isVideoIntersecting && scrolled) {
@@ -41,6 +43,17 @@ export function useVideoPlayer(scrolled: boolean) {
           JSON.stringify({ event: 'command', func: 'playVideo', args: [] }),
           '*'
         );
+        
+        if (!hasAutoUnmuted) {
+          iframeRef.current.contentWindow.postMessage(
+            JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
+            '*'
+          );
+          setTimeout(() => {
+            setIsMuted(false);
+            setHasAutoUnmuted(true);
+          }, 0);
+        }
       } else {
         iframeRef.current.contentWindow.postMessage(
           JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
@@ -48,7 +61,7 @@ export function useVideoPlayer(scrolled: boolean) {
         );
       }
     }
-  }, [isVideoIntersecting, scrolled, iframeLoaded]);
+  }, [isVideoIntersecting, scrolled, iframeLoaded, hasAutoUnmuted]);
 
   return { iframeRef, iframeLoaded, setIframeLoaded, isMuted, toggleMute };
 }
